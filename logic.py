@@ -1,6 +1,8 @@
 import aiohttp  # A library for asynchronous HTTP requests
 import random
 import asyncio
+from datetime import datetime, timedelta
+
 
 class Pokemon:
     pokemons = {"bulbasaur", "eevee", "vulpix"}
@@ -54,6 +56,15 @@ class Pokemon:
         else:
             enemy.hp = 0
             return f"@{self.pokemon_trainer} menang melawan @{enemy.pokemon_trainer}!"
+    async def feed(self, feed_interval = 20, hp_increase = 10 ):
+        current_time = datetime.now()  
+        delta_time = timedelta(hours=feed_interval)  
+        if (current_time - self.last_feed_time) > delta_time:
+            self.hp += hp_increase
+            self.last_feed_time = current_time
+            return f"Kesehatan Pokemon dipulihkan. HP saat ini: {self.hp}"
+        else:
+            return f"Kalian dapat memberi makan Pokémon kalian di: {current_time-delta_time}"
 class TungstenWizard(Pokemon):
     async def Fireball1(self, enemy):
         FireballPower = random.randint(5,15)
