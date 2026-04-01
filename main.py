@@ -18,6 +18,11 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 async def on_ready():
     print(f'I, {bot.user.name}, is a messeger of the server owner.')  # Outputs the bot's name to the console
 
+@bot.event
+async def on_member_join(member):
+    # Mengirim pesan ucapan selamat
+    for channel in member.guild.text_channels:
+        await channel.send(f'Hello there, {member.mention}.')
 # The '!go' command
 @bot.command()
 async def go(ctx):
